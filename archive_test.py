@@ -1,19 +1,20 @@
+import openpyxl, csv, os
 from zipfile import ZipFile
-import os
-import csv
-import openpyxl
 from PyPDF2 import PdfReader
 
 resources_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'resources')
 temp_files_dir = os.path.join(resources_dir, 'sample_files')
 
+
 with ZipFile(os.path.join(resources_dir, "sample.zip"), "w") as myzip:
     for file in os.listdir(temp_files_dir):
         myzip.write(os.path.join(temp_files_dir, file), file)
 
+
 def test_csv_file_exist_in_archive():
     with ZipFile(os.path.join(resources_dir, "sample.zip"), "r") as myzip:
         assert 'sample_csv.csv' in myzip.namelist()
+
 
 def test_csv_file_valid():
     with ZipFile(os.path.join(resources_dir, "sample.zip"), "r") as myzip:
@@ -49,3 +50,5 @@ def test_pdf_file_valid():
         page_text = reader.pages[0].extract_text()
         assert 'ТестёжзфЩ' in page_text
         os.remove('sample_pdf.pdf')
+
+os.remove('archive_test.py')
