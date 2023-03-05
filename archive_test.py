@@ -50,5 +50,3 @@ def test_pdf_file_valid():
         page_text = reader.pages[0].extract_text()
         assert 'ТестёжзфЩ' in page_text
         os.remove('sample_pdf.pdf')
-
-os.remove('archive_test.py')
